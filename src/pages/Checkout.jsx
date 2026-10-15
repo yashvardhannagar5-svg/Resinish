@@ -20,6 +20,7 @@ import {
 } from '../utils/checkout'
 import { formatPrice } from '../utils/format'
 import { saveLastOrder } from '../utils/orderSession'
+import { supabase } from '../supabaseClient';
 
 const PROCESSING_MS = 1400
 const fieldOrder = Object.keys(checkoutRules)
@@ -120,7 +121,7 @@ export default function Checkout() {
     submitting.current = true
     setStatus('processing')
 
-    timer.current = setTimeout(() => {
+    timer.current = setTimeout(async () => {
       const placedAt = new Date()
       const order = {
         number: createOrderNumber(),
@@ -136,7 +137,23 @@ export default function Checkout() {
         cartCleared: false,
       }
       saveLastOrder(order)
-      // The confirmation page clears the cart once it has the order in hand.
+      
+      try {
+        const productTitles = order.items.map(i => i.name).join(', ');
+        await supabase
+          .from('orders')
+          .insert([
+            {
+              customer_name: `${order.customer.firstName}`.trim(),
+              email: order.customer.email,
+              product_title: productTitles || 'Resin Item',
+              total_price: Math.round(order.total)
+            }
+          ]);
+      } catch (err) {
+        console.error('Failed to communicate with Supabase:', err);
+      }
+
       navigate('/order-success', { replace: true, state: { order } })
     }, PROCESSING_MS)
   }
@@ -178,7 +195,6 @@ export default function Checkout() {
       </header>
 
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-        {/* Mobile / tablet summary */}
         <details className="group rounded-md bg-surface lg:hidden">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4.5 [&::-webkit-details-marker]:hidden">
             <span className="flex items-center gap-2 text-sm font-semibold">
@@ -227,7 +243,10 @@ export default function Checkout() {
 
           <div className="-mt-5 border-t border-line pt-6">
             <label htmlFor="promo-code" className="block text-sm font-semibold">Offer code</label>
-            <div className="mt-2 flex gap-3"><input id="promo-code" value={promoCode} onChange={(event) => setPromoCode(event.target.value)} placeholder="WELCOME5" className="h-12 min-w-0 flex-1 rounded-md border border-line-strong bg-transparent px-4" /><button type="button" onClick={() => setPromoCode(promoCode.trim().toUpperCase())} className="rounded-full border border-line-strong px-5 text-sm font-semibold">Apply</button></div>
+            <div className="mt-2 flex gap-3">
+              <input id="promo-code" value={promoCode} onChange={(event) => setPromoCode(event.target.value)} placeholder="WELCOME5" className="h-12 min-w-0 flex-1 rounded-md border border-line-strong bg-transparent px-4" />
+              <button type="button" onClick={() => setPromoCode(promoCode.trim().toUpperCase())} className="rounded-full border border-line-strong px-5 text-sm font-semibold">Apply</button>
+            </div>
             {promoCode.trim() && promoCode.trim().toUpperCase() !== 'WELCOME5' && <p role="status" className="mt-2 text-sm text-accent">That code isn’t recognised. Try WELCOME5.</p>}
             {discount > 0 && <p role="status" className="mt-2 text-sm text-[#47734d]">WELCOME5 applied — you saved {formatPrice(discount)}.</p>}
           </div>
