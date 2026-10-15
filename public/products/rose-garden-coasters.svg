@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" role="img" aria-label="Handmade resin rose garden coasters product illustration">
+<defs>
+ <linearGradient id="bg" x2=".9" y2="1"><stop stop-color="#f0e2e1"/><stop offset="1" stop-color="#d8c9bf"/></linearGradient>
+ <linearGradient id="resin" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset=".45" stop-color="#edbdbe" stop-opacity=".72"/><stop offset="1" stop-color="#bd727d" stop-opacity=".88"/></linearGradient>
+ <filter id="shadow" x="-.3" y="-.2" width="1.6" height="1.6"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#725251" flood-opacity=".22"/></filter>
+</defs>
+<rect width="1000" height="1200" fill="url(#bg)"/><circle cx="175" cy="198" r="150" fill="#fff" opacity=".25"/><circle cx="845" cy="365" r="115" fill="#fff" opacity=".12"/><ellipse cx="500" cy="935" rx="320" ry="55" fill="#725251" opacity=".13"/>
+<g filter="url(#shadow)">
+      <g stroke="#bd9c62" stroke-width="10" fill="url(#resin)"><circle cx="370" cy="388" r="145"/><circle cx="630" cy="388" r="145"/><circle cx="370" cy="690" r="145"/><circle cx="630" cy="690" r="145"/></g>
+      <g fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="7"><circle cx="370" cy="388" r="119"/><circle cx="630" cy="388" r="119"/><circle cx="370" cy="690" r="119"/><circle cx="630" cy="690" r="119"/></g>
+      <g fill="#a94f5b"><path d="M370 450c-54-32-40-91-5-98 19 5 29 24 22 43 35-25 67 2 56 31-14 36-53 30-73 18z"/><path d="M630 450c-54-32-40-91-5-98 19 5 29 24 22 43 35-25 67 2 56 31-14 36-53 30-73 18z"/><path d="M370 752c-54-32-40-91-5-98 19 5 29 24 22 43 35-25 67 2 56 31-14 36-53 30-73 18z"/><path d="M630 752c-54-32-40-91-5-98 19 5 29 24 22 43 35-25 67 2 56 31-14 36-53 30-73 18z"/></g>
+      <g fill="none" stroke="#73906b" stroke-width="9"><path d="M370 460q-5-76 43-121m217 121q-4-76 44-121M370 762q-5-76 43-121m217 121q-4-76 44-121"/></g>
+      <path d="M283 299q48-31 98-22m164 22q48-31 98-22" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="15" stroke-linecap="round"/></g>
+<text x="500" y="1050" text-anchor="middle" fill="#725251" font-family="Georgia,serif" font-size="25" letter-spacing="5">ROSE GARDEN COASTERS</text>
+<text x="500" y="1095" text-anchor="middle" fill="#725251" opacity=".62" font-family="Arial,sans-serif" font-size="13" letter-spacing="4">HAND-POURED • ONE OF A KIND</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" role="img" aria-label="Handmade resin wildflower coaster set product illustration">
+<defs>
+ <linearGradient id="bg" x2=".9" y2="1"><stop stop-color="#f1e9dc"/><stop offset="1" stop-color="#d8c9bf"/></linearGradient>
+ <linearGradient id="resin" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset=".45" stop-color="#b9cc9e" stop-opacity=".72"/><stop offset="1" stop-color="#76906c" stop-opacity=".88"/></linearGradient>
+ <filter id="shadow" x="-.3" y="-.2" width="1.6" height="1.6"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#58614c" flood-opacity=".22"/></filter>
+</defs>
+<rect width="1000" height="1200" fill="url(#bg)"/><circle cx="175" cy="198" r="150" fill="#fff" opacity=".25"/><circle cx="845" cy="365" r="115" fill="#fff" opacity=".12"/><ellipse cx="500" cy="935" rx="320" ry="55" fill="#58614c" opacity=".13"/>
+<g filter="url(#shadow)">
+      <g stroke="#bfaa74" stroke-width="9">
+       <rect x="240" y="276" width="280" height="300" rx="32" fill="url(#resin)" transform="rotate(-8 380 426)"/><rect x="480" y="252" width="280" height="300" rx="32" fill="url(#resin)" transform="rotate(7 620 402)"/><rect x="246" y="552" width="280" height="300" rx="32" fill="url(#resin)" transform="rotate(7 386 702)"/><rect x="478" y="560" width="280" height="300" rx="32" fill="url(#resin)" transform="rotate(-7 618 710)"/>
+      </g>
+      <g fill="#fcf6e8" stroke="#c77e7d" stroke-width="5"><circle cx="380" cy="420" r="47"/><circle cx="620" cy="404" r="47"/><circle cx="390" cy="704" r="47"/><circle cx="610" cy="710" r="47"/></g>
+      <g fill="#e4b867"><circle cx="380" cy="420" r="14"/><circle cx="620" cy="404" r="14"/><circle cx="390" cy="704" r="14"/><circle cx="610" cy="710" r="14"/></g>
+      <g stroke="#667c5e" stroke-width="8" fill="none"><path d="M380 420q-50-55-82-95m82 95q40-70 80-78m160 62q-45-70-84-88m84 88q38-48 81-58m-311 358q-35-70-83-83m83 83q37-63 78-71m142 71q-43-75-79-78m79 78q45-57 82-70"/></g>
+      <path d="M302 320q63-31 112-7m136-18q59-27 108-3" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="15" stroke-linecap="round"/></g>
+<text x="500" y="1050" text-anchor="middle" fill="#58614c" font-family="Georgia,serif" font-size="25" letter-spacing="5">WILDFLOWER COASTER SET</text>
+<text x="500" y="1095" text-anchor="middle" fill="#58614c" opacity=".62" font-family="Arial,sans-serif" font-size="13" letter-spacing="4">HAND-POURED • ONE OF A KIND</text>
+</svg>

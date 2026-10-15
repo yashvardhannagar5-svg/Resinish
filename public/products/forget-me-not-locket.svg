@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" role="img" aria-label="Handmade resin forget me not locket product illustration">
+<defs>
+ <linearGradient id="bg" x2=".9" y2="1"><stop stop-color="#e1ebed"/><stop offset="1" stop-color="#d8c9bf"/></linearGradient>
+ <linearGradient id="resin" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset=".45" stop-color="#bbdce0" stop-opacity=".72"/><stop offset="1" stop-color="#6299a1" stop-opacity=".88"/></linearGradient>
+ <filter id="shadow" x="-.3" y="-.2" width="1.6" height="1.6"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#49676d" flood-opacity=".22"/></filter>
+</defs>
+<rect width="1000" height="1200" fill="url(#bg)"/><circle cx="175" cy="198" r="150" fill="#fff" opacity=".25"/><circle cx="845" cy="365" r="115" fill="#fff" opacity=".12"/><ellipse cx="500" cy="935" rx="320" ry="55" fill="#49676d" opacity=".13"/>
+<g filter="url(#shadow)">
+      <path d="M427 215v-48q0-72 73-72t73 72v48" fill="none" stroke="#c1a46a" stroke-width="19"/>
+      <circle cx="500" cy="493" r="236" fill="url(#resin)" stroke="#c1a46a" stroke-width="16"/>
+      <circle cx="500" cy="493" r="207" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="7"/>
+      <path d="M498 650q-4-151 11-290m-8 142q-78-87-130-68m130 16q73-84 126-63" fill="none" stroke="#6f8d67" stroke-width="11" stroke-linecap="round"/>
+      <g fill="#f6fbf8" stroke="#4b92b4" stroke-width="5"><circle cx="376" cy="421" r="33"/><circle cx="376" cy="421" r="9" fill="#e7bf62"/><circle cx="626" cy="449" r="35"/><circle cx="626" cy="449" r="9" fill="#e7bf62"/><circle cx="501" cy="371" r="30"/><circle cx="501" cy="371" r="8" fill="#e7bf62"/><circle cx="522" cy="552" r="32"/><circle cx="522" cy="552" r="8" fill="#e7bf62"/></g>
+      <path d="M337 352q78-37 151-8" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="16" stroke-linecap="round"/></g>
+<text x="500" y="1050" text-anchor="middle" fill="#49676d" font-family="Georgia,serif" font-size="25" letter-spacing="5">FORGET ME NOT LOCKET</text>
+<text x="500" y="1095" text-anchor="middle" fill="#49676d" opacity=".62" font-family="Arial,sans-serif" font-size="13" letter-spacing="4">HAND-POURED • ONE OF A KIND</text>
+</svg>

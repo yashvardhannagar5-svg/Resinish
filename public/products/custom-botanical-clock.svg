@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" role="img" aria-label="Handmade resin custom botanical clock product illustration">
+<defs>
+ <linearGradient id="bg" x2=".9" y2="1"><stop stop-color="#e9e2ef"/><stop offset="1" stop-color="#d8c9bf"/></linearGradient>
+ <linearGradient id="resin" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#fff" stop-opacity=".9"/><stop offset=".45" stop-color="#c9b9dc" stop-opacity=".72"/><stop offset="1" stop-color="#8c7ba4" stop-opacity=".88"/></linearGradient>
+ <filter id="shadow" x="-.3" y="-.2" width="1.6" height="1.6"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#5c526b" flood-opacity=".22"/></filter>
+</defs>
+<rect width="1000" height="1200" fill="url(#bg)"/><circle cx="175" cy="198" r="150" fill="#fff" opacity=".25"/><circle cx="845" cy="365" r="115" fill="#fff" opacity=".12"/><ellipse cx="500" cy="935" rx="320" ry="55" fill="#5c526b" opacity=".13"/>
+<g filter="url(#shadow)">
+      <circle cx="500" cy="500" r="330" fill="url(#resin)" stroke="#c2a567" stroke-width="20"/>
+      <circle cx="500" cy="500" r="300" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="8"/>
+      <g fill="#8d789e" opacity=".84"><ellipse cx="359" cy="374" rx="41" ry="92" transform="rotate(-48 359 374)"/><ellipse cx="644" cy="372" rx="41" ry="92" transform="rotate(48 644 372)"/><ellipse cx="351" cy="632" rx="40" ry="90" transform="rotate(48 351 632)"/><ellipse cx="649" cy="636" rx="40" ry="90" transform="rotate(-48 649 636)"/></g>
+      <g fill="#e9c881"><circle cx="357" cy="379" r="18"/><circle cx="645" cy="377" r="18"/><circle cx="352" cy="630" r="18"/><circle cx="650" cy="633" r="18"/></g>
+      <g stroke="#667c5e" stroke-width="10" fill="none"><path d="M357 379q26 68 143 121m288-123q-24 69-145 123M352 630q54-61 148-129m150 132q-49-60-150-132"/></g>
+      <g stroke="#5a4d42" stroke-width="9"><path d="M500 500l10-157"/><path d="M500 500l126 77"/></g><circle cx="500" cy="500" r="19" fill="#c19955"/>
+      <path d="M285 285q75-44 145-30" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="17" stroke-linecap="round"/></g>
+<text x="500" y="1050" text-anchor="middle" fill="#5c526b" font-family="Georgia,serif" font-size="25" letter-spacing="5">CUSTOM BOTANICAL CLOCK</text>
+<text x="500" y="1095" text-anchor="middle" fill="#5c526b" opacity=".62" font-family="Arial,sans-serif" font-size="13" letter-spacing="4">HAND-POURED • ONE OF A KIND</text>
+</svg>
