@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Navbar from './Navbar'
@@ -6,6 +6,7 @@ import Footer from './Footer'
 import CartDrawer from './CartDrawer'
 import VisitLoginModal from './VisitLoginModal'
 import { useCartStore } from '../store/cartStore'
+import { useAuthStore } from '../store/authStore'
 import { ScrollTrigger } from '../utils/gsap'
 
 export default function Layout() {
@@ -13,6 +14,9 @@ export default function Layout() {
   const [visitLoginOpen, setVisitLoginOpen] = useState(() => !sessionStorage.getItem('resin-visit-login-dismissed'))
   const cartOpen = useCartStore((s) => s.isOpen)
   const closeCart = useCartStore((s) => s.closeCart)
+  const authReady = useAuthStore((s) => s.ready)
+  const signedIn = useAuthStore((s) => Boolean(s.user))
+  const checkedSession = useRef(false)
   const { pathname } = useLocation()
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])
@@ -21,6 +25,13 @@ export default function Layout() {
     sessionStorage.setItem('resin-visit-login-dismissed', 'yes')
     setVisitLoginOpen(false)
   }, [])
+
+  // Returning visitors who are already signed in don't need the welcome dialog.
+  useEffect(() => {
+    if (!authReady || checkedSession.current) return
+    checkedSession.current = true
+    if (signedIn) dismissVisitLogin()
+  }, [authReady, signedIn, dismissVisitLogin])
 
   // New page: close overlays, reset scroll, re-measure scroll animations.
   useEffect(() => {

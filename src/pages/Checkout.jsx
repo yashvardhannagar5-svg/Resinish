@@ -12,7 +12,6 @@ import { selectSubtotal, selectTotalItems, useCartStore } from '../store/cartSto
 import {
   addBusinessDays,
   checkoutRules,
-  createOrderNumber,
   formatCardNumber,
   formatCvv,
   formatExpiry,
@@ -20,9 +19,9 @@ import {
 } from '../utils/checkout'
 import { formatPrice } from '../utils/format'
 import { saveLastOrder } from '../utils/orderSession'
-import { supabase } from '../supabaseClient';
+import { placeOrder } from '../lib/orders'
+import { useAuthStore } from '../store/authStore'
 
-const PROCESSING_MS = 1400
 const fieldOrder = Object.keys(checkoutRules)
 
 const initialValues = {
@@ -74,6 +73,7 @@ export default function Checkout() {
   const subtotal = useCartStore(selectSubtotal)
   const totalItems = useCartStore(selectTotalItems)
   const navigate = useNavigate()
+  const user = useAuthStore((s) => s.user)
 
   const [values, setValues] = useState(initialValues)
   const [touched, setTouched] = useState({})
@@ -81,11 +81,14 @@ export default function Checkout() {
   const [shippingId, setShippingId] = useState(shippingMethods[0].id)
   const [promoCode, setPromoCode] = useState('')
   const [status, setStatus] = useState('idle') // idle | processing
+  const [submitError, setSubmitError] = useState('')
   const formRef = useRef(null)
   const submitting = useRef(false)
-  const timer = useRef(0)
 
-  useEffect(() => () => clearTimeout(timer.current), [])
+  // Signed-in customers get their email filled in (they can still change it).
+  useEffect(() => {
+    if (user?.email) setValues((prev) => (prev.email ? prev : { ...prev, email: user.email }))
+  }, [user])
 
   const errors = useMemo(() => validateCheckout(values), [values])
   const shipping = getShippingMethod(shippingId)
@@ -107,7 +110,7 @@ export default function Checkout() {
     error: visibleError(name),
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (submitting.current) return
     setSubmitAttempted(true)
@@ -120,11 +123,15 @@ export default function Checkout() {
 
     submitting.current = true
     setStatus('processing')
+    setSubmitError('')
 
-    timer.current = setTimeout(async () => {
-      const placedAt = new Date()
+    const placedAt = new Date()
+    const deliveryWindow = shipping.days.map((d) => addBusinessDays(placedAt, d).toISOString())
+    try {
+      // Saves the order in Supabase. Card fields are never sent.
+      const saved = await placeOrder({ values, items, shipping, shippingPrice, subtotal, discount, total, promoCode, deliveryWindow })
       const order = {
-        number: createOrderNumber(),
+        number: saved.order_number,
         placedAt: placedAt.toISOString(),
         items: items.map(({ key, name, price, quantity, color, image, customNote }) => ({ key, name, price, quantity, color, image, customNote })),
         subtotal,
@@ -132,30 +139,18 @@ export default function Checkout() {
         shipping: shippingPrice,
         shippingLabel: shipping.label,
         total,
-        deliveryWindow: shipping.days.map((d) => addBusinessDays(placedAt, d).toISOString()),
+        deliveryWindow,
         customer: { firstName: values.firstName.trim(), email: values.email.trim(), city: values.city.trim() },
         cartCleared: false,
       }
       saveLastOrder(order)
-      
-      try {
-        const productTitles = order.items.map(i => i.name).join(', ');
-        await supabase
-          .from('orders')
-          .insert([
-            {
-              customer_name: `${order.customer.firstName}`.trim(),
-              email: order.customer.email,
-              product_title: productTitles || 'Resin Item',
-              total_price: Math.round(order.total)
-            }
-          ]);
-      } catch (err) {
-        console.error('Failed to communicate with Supabase:', err);
-      }
-
+      // The confirmation page clears the cart once it has the order in hand.
       navigate('/order-success', { replace: true, state: { order } })
-    }, PROCESSING_MS)
+    } catch (error) {
+      submitting.current = false
+      setStatus('idle')
+      setSubmitError(error.message || 'We couldn’t place your order. Please try again.')
+    }
   }
 
   if (items.length === 0) {
@@ -195,6 +190,7 @@ export default function Checkout() {
       </header>
 
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+        {/* Mobile / tablet summary */}
         <details className="group rounded-md bg-surface lg:hidden">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4.5 [&::-webkit-details-marker]:hidden">
             <span className="flex items-center gap-2 text-sm font-semibold">
@@ -243,10 +239,7 @@ export default function Checkout() {
 
           <div className="-mt-5 border-t border-line pt-6">
             <label htmlFor="promo-code" className="block text-sm font-semibold">Offer code</label>
-            <div className="mt-2 flex gap-3">
-              <input id="promo-code" value={promoCode} onChange={(event) => setPromoCode(event.target.value)} placeholder="WELCOME5" className="h-12 min-w-0 flex-1 rounded-md border border-line-strong bg-transparent px-4" />
-              <button type="button" onClick={() => setPromoCode(promoCode.trim().toUpperCase())} className="rounded-full border border-line-strong px-5 text-sm font-semibold">Apply</button>
-            </div>
+            <div className="mt-2 flex gap-3"><input id="promo-code" value={promoCode} onChange={(event) => setPromoCode(event.target.value)} placeholder="WELCOME5" className="h-12 min-w-0 flex-1 rounded-md border border-line-strong bg-transparent px-4" /><button type="button" onClick={() => setPromoCode(promoCode.trim().toUpperCase())} className="rounded-full border border-line-strong px-5 text-sm font-semibold">Apply</button></div>
             {promoCode.trim() && promoCode.trim().toUpperCase() !== 'WELCOME5' && <p role="status" className="mt-2 text-sm text-accent">That code isn’t recognised. Try WELCOME5.</p>}
             {discount > 0 && <p role="status" className="mt-2 text-sm text-[#47734d]">WELCOME5 applied — you saved {formatPrice(discount)}.</p>}
           </div>
@@ -282,6 +275,11 @@ export default function Checkout() {
           </Section>
 
           <div className="border-t border-line pt-8">
+            {submitError && (
+              <p role="alert" className="mb-5 text-sm text-accent">
+                {submitError}
+              </p>
+            )}
             {hasVisibleErrors && (
               <p role="alert" className="mb-5 text-sm text-accent">
                 Please check the highlighted fields.
@@ -298,7 +296,7 @@ export default function Checkout() {
               )}
             </Button>
             <p className="mt-4 text-center text-xs text-muted">
-              By placing this demo order you agree to our{' '}
+              By placing this order you agree to our{' '}
               <Link to="/terms" className="underline underline-offset-2 hover:text-ink">
                 terms
               </Link>
